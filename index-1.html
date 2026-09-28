@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meetly – Meet new people on live video</title>
+<meta name="description" content="Instant video calls with people from around the world. No signup, no personal details.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1240;--ink2:#4a4470;--bg:#f6f4ff;--card:#fff;--line:#e4e0f5;--p1:#6c3df4;--p2:#ff4f8b;--p3:#ffb84d;--ok:#12b886;--bad:#e03131;--grad:linear-gradient(135deg,var(--p1),var(--p2))}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.6 Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+h1,h2,h3,.logo{font-family:Sora,Inter,sans-serif;margin:0;line-height:1.15}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-weight:800;font-size:1.5rem;display:flex;align-items:center;gap:10px;color:#fff}
+.logo i{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;font-style:normal;font-size:1.1rem}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;color:#cfc8f5;font-weight:500;font-size:.95rem}
+nav ul a:hover{color:#fff}
+.hero{background:radial-gradient(900px 500px at 85% 10%,rgba(255,79,139,.35),transparent 60%),radial-gradient(700px 500px at 0% 100%,rgba(108,61,244,.55),transparent 60%),#150e37;color:#fff;padding-bottom:110px;position:relative;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-top:40px}
+.badge{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:99px;font-size:.85rem;margin-bottom:20px}
+.badge b{width:8px;height:8px;border-radius:50%;background:#37d67a;box-shadow:0 0 0 4px rgba(55,214,122,.25)}
+h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,var(--p3),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{color:#cfc8f5;font-size:1.15rem;max-width:480px;margin:18px 0 28px}
+.btn{display:inline-block;border:0;cursor:pointer;font:600 1rem Inter,sans-serif;padding:14px 26px;border-radius:12px;background:var(--grad);color:#fff;box-shadow:0 10px 28px rgba(255,79,139,.35);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);box-shadow:none}
+.btn.dark{background:#fff;color:var(--ink);box-shadow:none}
+.stats{display:flex;gap:34px;margin-top:34px;color:#cfc8f5;font-size:.9rem}
+.stats b{display:block;font:800 1.5rem Sora,sans-serif;color:#fff}
+.mock{position:relative;height:380px}
+.tile{position:absolute;border-radius:22px;overflow:hidden;border:3px solid rgba(255,255,255,.2);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.tile.a{inset:0 70px 60px 0;background:linear-gradient(160deg,#7b4dff,#c23bff)}
+.tile.b{width:46%;height:46%;right:0;bottom:0;background:linear-gradient(160deg,#ff8a5c,#ff4f8b)}
+.tile svg{position:absolute;inset:0;width:100%;height:100%}
+.tag{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.45);padding:4px 12px;border-radius:99px;font-size:.8rem}
+.float{position:absolute;background:#fff;color:var(--ink);border-radius:14px;padding:10px 14px;font-size:.85rem;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.25);display:flex;gap:8px;align-items:center}
+.float.f1{top:-6px;right:20px}.float.f2{left:-10px;bottom:24px}
+.chat{margin-top:-80px;position:relative;z-index:2}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 20px 60px rgba(60,30,140,.14)}
+.card h2{font-size:1.4rem;margin-bottom:4px}
+.card .sub{color:var(--ink2);margin:0 0 18px}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.85rem;color:var(--ink2)}
+select{font:500 1rem Inter,sans-serif;color:var(--ink);background:#faf9ff;border:1px solid var(--line);border-radius:11px;padding:12px}
+select:focus-visible,button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--p1);outline-offset:2px}
+.age{display:flex;gap:10px;align-items:center;margin:16px 0;font-size:.9rem;color:var(--ink2)}
+.age input{width:18px;height:18px;accent-color:var(--p1)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+#status{margin:14px 0 0;padding:10px 14px;border-radius:10px;background:#f0edff;color:var(--ink2);font-size:.92rem}
+#status.err{background:#fff0f0;color:var(--bad)}
+.videos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.vwrap{position:relative;border-radius:16px;overflow:hidden;background:#150e37;aspect-ratio:4/3}
+video{width:100%;height:100%;object-fit:cover;display:block}
+.vwrap span{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.5);color:#fff;font-size:.78rem;padding:3px 10px;border-radius:99px}
+section.block{padding:80px 0 0}
+section h2.t{font-size:clamp(1.7rem,3.5vw,2.3rem);text-align:center}
+.lead2{text-align:center;color:var(--ink2);max-width:560px;margin:10px auto 40px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;margin-bottom:14px}
+.feat h3{font-size:1.1rem;margin-bottom:6px}.feat p{margin:0;color:var(--ink2);font-size:.95rem}
+.steps .feat{position:relative}
+.num{position:absolute;top:18px;right:20px;font:800 2.4rem Sora,sans-serif;color:#ece8ff}
+.safe{margin-top:80px;background:var(--ink);color:#fff;border-radius:26px;padding:44px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center;background-image:radial-gradient(500px 300px at 100% 0,rgba(255,79,139,.3),transparent 60%)}
+.safe h2{font-size:1.9rem;margin-bottom:12px}.safe p{color:#cfc8f5;margin:0}
+.safe ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.safe li{background:rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;display:flex;gap:10px}
+.safe li::before{content:"✓";color:#37d67a;font-weight:800}
+footer{margin-top:80px;background:#150e37;color:#a59ed6;padding:40px 0;font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+footer ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+@media(max-width:860px){.hero .grid,.safe{grid-template-columns:1fr}.mock{height:300px}.fields,.cards{grid-template-columns:1fr}nav ul{display:none}.videos{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#"><i>💬</i>Meetly</a>
+      <ul><li><a href="#how">How it works</a></li><li><a href="#features">Features</a></li><li><a href="#safety">Safety</a></li></ul>
+      <a class="btn dark" href="#chat" style="padding:10px 20px">Start chatting</a>
+    </nav>
+    <div class="grid">
+      <div>
+        <div class="badge"><b></b>Live now: people online worldwide</div>
+        <h1>Meet someone <span>new</span> in one click</h1>
+        <p class="lead">Face-to-face video calls with people from any country. No account, no personal details, just say hello.</p>
+        <a class="btn" href="#chat">Start a video chat</a>
+        <div class="stats"><div><b>35+</b>countries</div><div><b>0</b>signup needed</div><div><b>HD</b>video &amp; audio</div></div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="tile a"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMax slice"><circle cx="50" cy="38" r="14" fill="rgba(255,255,255,.85)"/><path d="M20 100c0-24 14-38 30-38s30 14 30 38z" fill="rgba(255,255,255,.85)"/></svg><div class="tag">Sofia · Brazil</div></div>
+        <div class="tile b"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMax slice"><circle cx="50" cy="40" r="15" fill="rgba(255,255,255,.85)"/><path d="M18 100c0-24 14-36 32-36s32 12 32 36z" fill="rgba(255,255,255,.85)"/></svg><div class="tag">You</div></div>
+        <div class="float f1">🌍 Matched: Canada</div>
+        <div class="float f2">✨ Say hi!</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="chat" id="chat">
+    <div class="card">
+      <h2>Start your video chat</h2>
+      <p class="sub">Choose who you'd like to meet. Nothing else is asked.</p>
+      <div class="fields">
+        <label class="f">I am<select id="me"><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+        <label class="f">Match me with<select id="want"><option value="opposite">Opposite gender</option><option value="any">Anyone</option><option value="male">Male</option><option value="female">Female</option></select></label>
+        <label class="f">Country<select id="country"><option value="any">Anywhere in the world</option></select></label>
+      </div>
+      <div class="age"><input type="checkbox" id="age"><label for="age">I am 18 or older and agree to the community rules.</label></div>
+      <div class="actions">
+        <button class="btn" id="start">Start chat</button>
+        <button class="btn ghost" id="next" hidden>Next person</button>
+        <button class="btn ghost" id="stop" hidden>Stop</button>
+      </div>
+      <div id="status" role="status">Allow camera and microphone, then press Start chat.</div>
+      <div class="videos">
+        <div class="vwrap"><video id="remote" autoplay playsinline></video><span>Stranger</span></div>
+        <div class="vwrap"><video id="local" autoplay playsinline muted></video><span>You</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" id="how">
+    <h2 class="t">How it works</h2>
+    <p class="lead2">Three steps between you and a new conversation.</p>
+    <div class="cards steps">
+      <div class="feat"><span class="num">1</span><div class="ico" style="background:#efe9ff">🎛️</div><h3>Choose preferences</h3><p>Pick the gender and country you'd like to meet.</p></div>
+      <div class="feat"><span class="num">2</span><div class="ico" style="background:#ffe8f0">⚡</div><h3>Get matched</h3><p>We connect you with someone who fits, usually in seconds.</p></div>
+      <div class="feat"><span class="num">3</span><div class="ico" style="background:#fff3dc">👋</div><h3>Talk or skip</h3><p>Enjoy the chat, or press Next to meet someone else.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="features">
+    <h2 class="t">Built for easy conversations</h2>
+    <p class="lead2">Simple, fast and private by design.</p>
+    <div class="cards">
+      <div class="feat"><div class="ico" style="background:#e3f7f0">🔒</div><h3>No personal details</h3><p>No email, phone or profile. Start a call without signing up.</p></div>
+      <div class="feat"><div class="ico" style="background:#e6efff">🌍</div><h3>Choose your country</h3><p>Meet people from a specific country or from anywhere.</p></div>
+      <div class="feat"><div class="ico" style="background:#ffe8f0">💞</div><h3>Gender matching</h3><p>Every call can match you with a different gender when available.</p></div>
+      <div class="feat"><div class="ico" style="background:#efe9ff">🎥</div><h3>Direct video and audio</h3><p>Calls connect peer to peer for clear, low-delay video.</p></div>
+      <div class="feat"><div class="ico" style="background:#fff3dc">⏭️</div><h3>Skip anytime</h3><p>Not feeling it? One tap takes you to the next person.</p></div>
+      <div class="feat"><div class="ico" style="background:#ffeaea">🛡️</div><h3>Respect first</h3><p>18+ only, with community rules for everyone.</p></div>
+    </div>
+  </section>
+
+  <section class="safe" id="safety">
+    <div><h2>Your safety comes first</h2><p>Meetly is for adults who want friendly conversation. Keep it kind, and never share private information with someone you just met.</p></div>
+    <ul><li>Adults 18+ only</li><li>Skip or leave any call instantly</li><li>Don't share addresses, money or passwords</li><li>Harassment leads to a ban</li></ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#" style="font-size:1.2rem"><i>💬</i>Meetly</a>
+    <ul><li><a href="#how">How it works</a></li><li><a href="#safety">Safety</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul>
+    <span>© 2026 Meetly. Adults 18+ only.</span>
+  </div>
+</footer>
+
+<script>
+// Set this to your signaling server (see server.js), e.g. "wss://yourdomain.com"
+const SIGNAL_URL = "";
+const ICE = [{urls:"stun:stun.l.google.com:19302"}]; // add a TURN server for reliability
+
+const countries = ["United States","United Kingdom","Canada","Australia","India","Pakistan","Bangladesh","Nigeria","Kenya","South Africa","Egypt","Turkey","Germany","France","Spain","Italy","Netherlands","Poland","Russia","Ukraine","Brazil","Mexico","Argentina","Colombia","Philippines","Indonesia","Vietnam","Thailand","Malaysia","Japan","South Korea","China","Saudi Arabia","UAE","Israel"];
+const $ = id => document.getElementById(id);
+countries.sort().forEach(c => $("country").add(new Option(c, c)));
+
+let ws, pc, stream;
+const say = (t, err) => { $("status").textContent = t; $("status").className = err ? "err" : ""; };
+
+async function start() {
+  if (!$("age").checked) return say("Please confirm you are 18 or older.", true);
+  if (!SIGNAL_URL) return say("No matching server connected. Set SIGNAL_URL in this file and run server.js.", true);
+  try {
+    stream = stream || await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+  } catch { return say("Camera or microphone access was blocked. Allow it in your browser settings.", true); }
+  $("local").srcObject = stream;
+  $("start").hidden = true; $("next").hidden = false; $("stop").hidden = false;
+  find();
+}
+
+function find() {
+  cleanup(false);
+  say("Looking for someone...");
+  ws = new WebSocket(SIGNAL_URL);
+  ws.onopen = () => ws.send(JSON.stringify({type:"join", me:$("me").value, want:$("want").value, country:$("country").value}));
+  ws.onerror = () => say("Cannot reach the matching server.", true);
+  ws.onmessage = async e => {
+    const m = JSON.parse(e.data);
+    if (m.type === "matched") {
+      say("Connected. Say hello!");
+      pc = new RTCPeerConnection({iceServers:ICE});
+      stream.getTracks().forEach(t => pc.addTrack(t, stream));
+      pc.ontrack = ev => $("remote").srcObject = ev.streams[0];
+      pc.onicecandidate = ev => ev.candidate && ws.send(JSON.stringify({type:"ice", c:ev.candidate}));
+      pc.onconnectionstatechange = () => { if (["failed","disconnected"].includes(pc.connectionState)) say("Stranger left. Press Next person."); };
+      if (m.initiator) {
+        await pc.setLocalDescription(await pc.createOffer());
+        ws.send(JSON.stringify({type:"offer", sdp:pc.localDescription}));
+      }
+    } else if (m.type === "offer") {
+      await pc.setRemoteDescription(m.sdp);
+      await pc.setLocalDescription(await pc.createAnswer());
+      ws.send(JSON.stringify({type:"answer", sdp:pc.localDescription}));
+    } else if (m.type === "answer") await pc.setRemoteDescription(m.sdp);
+    else if (m.type === "ice" && pc) try { await pc.addIceCandidate(m.c); } catch {}
+    else if (m.type === "left") say("Stranger left. Press Next person.");
+  };
+}
+
+function cleanup(all) {
+  if (ws) ws.close(); if (pc) pc.close(); ws = pc = null;
+  $("remote").srcObject = null;
+  if (all && stream) { stream.getTracks().forEach(t => t.stop()); stream = null; $("local").srcObject = null; }
+}
+
+$("start").onclick = start;
+$("next").onclick = find;
+$("stop").onclick = () => { cleanup(true); $("start").hidden = false; $("next").hidden = true; $("stop").hidden = true; say("Stopped."); };
+</script>
+</body>
+</html>
